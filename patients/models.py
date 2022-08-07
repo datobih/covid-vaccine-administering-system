@@ -25,7 +25,7 @@ class VaccineCase(models.Model):
     test_type=models.CharField(default='Oropharyngeal',max_length=50)
     test_date=models.DateTimeField(auto_now_add=True)
     dosage_timeline=models.CharField(max_length=200)
-    patient=models.ForeignKey(Patient,on_delete=models.CASCADE)
+    patient=models.ForeignKey(Patient,on_delete=models.CASCADE,related_name='vaccine_cases')
 
     def __str__(self):
         return self.case_id

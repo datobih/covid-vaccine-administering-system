@@ -1,46 +1,39 @@
 from typing import ClassVar
 from django.shortcuts import render
-from django.views.generic import View
+from rest_framework.views import APIView
 import random
 from patients.models import Patient, VaccineCase
 from rest_framework.authtoken.models import Token
 from datetime import datetime
+from .serializer import AddPatientSerializer,NewPatientCaseSerializer
+from rest_framework.response import Response
+
 
 # Create your views here.
 
-class AddPatientView(View):
+class AddPatientView(APIView):
     def post(self,request):
-        data=request.POST
-        fullname=data['fullname']
-        gender=data['gender']
-        age=data['age']
-        health_status=data['health_status']
+        data=request.data
+        serializer=AddPatientSerializer(data=data)
+        if(not serializer.is_valid):
+            return Response(serializer.errors,status=400)
 
+        return Response(data=serializer.validated_data,
+         status=200)
 
-        patient=Patient.objects.create(fullname=fullname,
-        gender=gender,age=age,health_status=health_status)
-
-
-        
-
-        
-    def get(self,request):
-        pass
-
-class NewPatientCase(View):
+class NewPatientCase(APIView):
     def post(self,request,**kwargs):
-        data=request.POST
-        case_id='#1'
-        sample_result=random.randint(0,100)
-        viral_level=sample_result
-        patient=Patient.objects.get(pk=kwargs['pk'])
-        vaccine_case=VaccineCase(case_id=case_id,sample_result=sample_result,
-        viral_level=viral_level,patient=patient,dosage_timeline='')
-        vaccine_case.save()
+        data=request.data
+        serializer=NewPatientCaseSerializer(data=data)
+        if(not serializer.is_valid()):
+            return Response(data=serializer.errors,status=400)
+        
+        vaccine_case_pk=serializer.validated_data['vaccine_pk']
+        return Response({'vaccine_case_pk':vaccine_case_pk},status=200)
 
 
 
-class AdministerVaccine(View):
+class AdministerVaccine(APIView):
     def round_up_even(num):
         return num+(num%10)
 
@@ -66,10 +59,9 @@ class AdministerVaccine(View):
         times_more=viral_level/20
         vaccine_case.save()
 
-class PatientStatus(View):
-    def get(self,request,**kwargs):
+class PatientStatus(APIView):
+    def post(self,request,**kwargs):
         pass
-
 
 
 
