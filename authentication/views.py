@@ -13,6 +13,12 @@ from django.contrib.auth import authenticate
 User=get_user_model()
 
 # Create your views here.
+
+class DummyView(APIView):
+    def get(self,request):
+        return Response(status=200)
+
+
 class CreateSuperUser(APIView):
     def post(self,request):
         data=request.data
