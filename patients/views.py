@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic import View
 import random
 from patients.models import Patient, VaccineCase
+from rest_framework.authtoken.models import Token
 from datetime import datetime
 
 # Create your views here.
