@@ -19,5 +19,5 @@ from authentication import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.DummyView.as_view(),name="home-page")
+    path('dummy_page/',views.DummyView.as_view(),name="home-page")
 ]

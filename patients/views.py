@@ -13,6 +13,8 @@ from rest_framework.response import Response
 
 # Create your views here.
 
+
+
 class AddPatientView(APIView):
     def post(self,request):
         data=request.data
