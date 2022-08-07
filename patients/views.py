@@ -5,7 +5,9 @@ import random
 from patients.models import Patient, VaccineCase
 from rest_framework.authtoken.models import Token
 from datetime import datetime
-from .serializer import AddPatientSerializer,NewPatientCaseSerializer
+from .serializer import (
+    AddPatientSerializer, AdministerVaccineSerializer,
+    NewPatientCaseSerializer, PatientSerializer)
 from rest_framework.response import Response
 
 
@@ -34,35 +36,36 @@ class NewPatientCase(APIView):
 
 
 class AdministerVaccine(APIView):
-    def round_up_even(num):
-        return num+(num%10)
-
     def post(self,request,**kwargs):
-        data=request.POST
-        pk=kwargs['pk']
+        data=request.data
+        serializer=AdministerVaccineSerializer(data=data)
+        if(not serializer.is_valid()):
+            return Response(serializer.errors,status=400)
 
-        vaccine_case=VaccineCase.objects.get(pk=pk)
-        viral_level=vaccine_case.viral_level
-        if(viral_level<20):
-            viral_level-=0
-        elif(viral_level==0):
-            pass
+        return Response({'times_more':
+        serializer.validated_data['times_more']})
 
-        else:
-            viral_level-=20
-            viral_level=self.round_up_even(viral_level)
-        
-        vaccine_case.viral_level=viral_level
-        vaccine_case.dosage_timeline
-        current_time=str(datetime.now())
-        vaccine_case.dosage_timeline+=current_time+','
-        times_more=viral_level/20
-        vaccine_case.save()
+
+
+
+
 
 class PatientStatus(APIView):
     def post(self,request,**kwargs):
-        pass
+        data=request.data
+        if(len(data)==1):
+            if('pk' in data):
+                pk=data['pk']
+                patient=Patient.objects.get(pk=pk)
+                if(not patient):
+                    return Response({'error':
+                    'Patient not found from the pk provided'})
 
+                serializer=PatientSerializer(patient)
+                return Response(serializer.data)
+
+
+        return Response({'error':'pk not found'},status=400)
 
 
 
