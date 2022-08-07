@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8aev6dx$&#(j=%dq+nsj%t+!*3m2f&dkjh3%m384o5!tddmj=x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['covid-vaccine-system.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
