@@ -5,13 +5,17 @@ from django.db import models
 patient_status_choices=[('Healthy','Healthy'),
     ('Infected','Infected'),
 ]
-gender_choices=[('M','M'),('F','F')]
+gender_choices=[('Male','Male'),('Female','Female')]
+genotype_choices=[('AA','AA'),('AS','AS'),('SS','SS')]
 
 class Patient(models.Model):
     fullname=models.CharField(max_length=50,unique=True)
-    gender=models.CharField(max_length=2,choices=gender_choices)
+    gender=models.CharField(max_length=6,choices=gender_choices)
     age=models.IntegerField()
-    health_status=models.CharField(choices=patient_status_choices,max_length=15,default='Infected')
+    genotype=models.CharField(choices=genotype_choices,max_length=2,default='')
+    email=models.EmailField(default='')
+    blood_group=models.CharField(max_length=2,null=True,blank=True,default=None)
+    phone_number=models.CharField(max_length=11,default='')
 
     def __str__(self) -> str:
         return self.fullname

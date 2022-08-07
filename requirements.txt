@@ -1,0 +1,11 @@
+asgiref==3.5.2
+certifi==2022.6.15
+Django==4.1
+django-filter==22.1
+djangorestframework==3.13.1
+Markdown==3.4.1
+pytz==2022.1
+sqlparse==0.4.2
+tzdata==2022.1
+wincertstore==0.2
+gunicorn==20.1.0

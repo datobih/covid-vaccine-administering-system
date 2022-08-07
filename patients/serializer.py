@@ -1,22 +1,29 @@
 from rest_framework import serializers
 from .models import Patient,VaccineCase
 import random
-import datetime
+from datetime import datetime
 import json
 
 class AddPatientSerializer(serializers.Serializer):
     fullname=serializers.CharField()
     gender=serializers.CharField(max_length=1)
     age=serializers.CharField(max_length=3)
-    health_status=serializers.CharField()
-
+    genotype=serializers.CharField()
+    email=serializers.EmailField()
+    blood_group=serializers.CharField()
+    phone_number=serializers.CharField(max_length=11)
+    
     def validate(self, attrs):
         super().validate(attrs)
         
         patient=Patient.objects.create(
         fullname=attrs['fullname'],
         gender=attrs['gender'],age=attrs['age'],
-        health_status=attrs['health_status'])
+        genotype=attrs['genotype'],
+        email=attrs['email'],
+        phone_number=attrs['phone_number'],
+        blood_group=attrs['blood_group']
+        )
         attrs['pk']=patient.pk
         return attrs
 
@@ -57,17 +64,35 @@ class AdministerVaccineSerializer(serializers.Serializer):
     def round_up_even(num):
         return num+(num%10)
 
+    def is_dosage_valid(current_timestamp,recent_timestamp):
+        time_difference=current_timestamp-recent_timestamp
+        if(time_difference<592200):
+            return False
+        return True
+
     def validate(self, attrs):
         super().validate(attrs)
-
+        current_time=datetime.now()
         vaccine_case=VaccineCase.objects.get(pk=attrs['pk'])
         if(not vaccine_case):
              raise serializers.ValidationError('Invalid vaccine case primary key')
+        dosage_timeline=json.loads(vaccine_case.dosage_timeline)
+        timeline=dosage_timeline['timeline']
+        if(len(timeline)!=0):
+            recent_timestamp=timeline[len(timeline)-1]
+            current_timestamp=current_time.timestamp()
+
+            if(not self.is_dosage_valid(current_timestamp,recent_timestamp)):
+                raise serializers.ValidationError(
+                'Inelligible to take a dose at the moment')
+        
+        
+
         viral_level=vaccine_case.viral_level
         if(viral_level<20):
             viral_level-=0
         elif(viral_level==0):
-            pass
+            raise serializers.ValidationError()
 
         else:
             viral_level-=20
@@ -75,9 +100,9 @@ class AdministerVaccineSerializer(serializers.Serializer):
         
         vaccine_case.viral_level=viral_level
         vaccine_case.dosage_timeline
-        current_time=str(datetime.now())
-        dosage_timeline=json.loads(vaccine_case.dosage_timeline)
-        dosage_timeline['timeline'].append(current_time)
+        current_time=datetime.now()
+
+        dosage_timeline['timeline'].append(current_time.timestamp())
 
         #Convert dosage_timeline to string
         vaccine_case.dosage_timeline=json.dumps(dosage_timeline)
