@@ -8,7 +8,7 @@ patient_status_choices=[('Healthy','Healthy'),
 gender_choices=[('M','M'),('F','F')]
 
 class Patient(models.Model):
-    fullname=models.CharField(max_length=50)
+    fullname=models.CharField(max_length=50,unique=True)
     gender=models.CharField(max_length=2,choices=gender_choices)
     age=models.IntegerField()
     health_status=models.CharField(choices=patient_status_choices,max_length=15,default='Infected')
