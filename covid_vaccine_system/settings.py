@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'authentication',
     'patients',
     'rest_framework',
     'rest_framework.authtoken',
-    "corsheaders",
+
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
 'https://covid-vaccine-system.herokuapp.com'
 ]
