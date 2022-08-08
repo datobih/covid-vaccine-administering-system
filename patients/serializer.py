@@ -28,6 +28,7 @@ class AddPatientSerializer(serializers.Serializer):
         blood_group=attrs['blood_group']
         )
         attrs['pk']=patient.pk
+        attrs['status']=200
         return attrs
 
 
