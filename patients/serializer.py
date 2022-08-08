@@ -5,7 +5,8 @@ from datetime import datetime
 import json
 
 class AddPatientSerializer(serializers.Serializer):
-    fullname=serializers.CharField()
+    first_name=serializers.CharField(max_length=50)
+    last_name=serializers.CharField(max_length=50)
     gender=serializers.CharField(max_length=1)
     age=serializers.CharField(max_length=3)
     genotype=serializers.CharField()
@@ -17,8 +18,10 @@ class AddPatientSerializer(serializers.Serializer):
         super().validate(attrs)
         
         patient=Patient.objects.create(
-        fullname=attrs['fullname'],
-        gender=attrs['gender'],age=attrs['age'],
+        first_name=attrs['first_name'],
+        last_name=attrs['last_name'],
+        gender=attrs['gender'],
+        age=attrs['age'],
         genotype=attrs['genotype'],
         email=attrs['email'],
         phone_number=attrs['phone_number'],

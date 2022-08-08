@@ -9,7 +9,8 @@ gender_choices=[('Male','Male'),('Female','Female')]
 genotype_choices=[('AA','AA'),('AS','AS'),('SS','SS')]
 
 class Patient(models.Model):
-    fullname=models.CharField(max_length=50,unique=True)
+    first_name=models.CharField(max_length=50,default='')
+    last_name=models.CharField(max_length=50,default='')
     gender=models.CharField(max_length=6,choices=gender_choices)
     age=models.IntegerField()
     genotype=models.CharField(choices=genotype_choices,max_length=2,default='')
