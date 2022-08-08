@@ -18,6 +18,7 @@ from rest_framework.response import Response
 class AddPatientView(APIView):
     def post(self,request):
         data=request.data
+        print(data)
         serializer=AddPatientSerializer(data=data)
         if(not serializer.is_valid):
             return Response(serializer.errors,status=400)
