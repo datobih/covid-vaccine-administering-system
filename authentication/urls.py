@@ -1,7 +1,8 @@
 from urllib.parse import urlparse
 
 from django.urls import path
-from .views import CreateSuperUser
+from .views import CreateSuperUserView,LoginUserView
 urlpatterns = [
-    path('create-super-user/',CreateSuperUser.as_view(),name='create-super-user')
+    path('create-super-user/',CreateSuperUserView.as_view(),name='create-super-user'),
+    path('login/',LoginUserView.as_view(),name='login-user')
 ]

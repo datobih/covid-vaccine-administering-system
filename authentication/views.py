@@ -19,7 +19,7 @@ class DummyView(APIView):
         return Response(status=200)
 
 
-class CreateSuperUser(APIView):
+class CreateSuperUserView(APIView):
     def post(self,request):
         data=request.data
         print(data)
@@ -30,7 +30,7 @@ class CreateSuperUser(APIView):
         return Response(status=200)
 
 
-class LoginUser(APIView):
+class LoginUserView(APIView):
     def post(self,request):
         data=request.data
         serializer=LoginUserSerializer(data=data)
