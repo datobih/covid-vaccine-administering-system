@@ -42,8 +42,8 @@ class LoginUserView(APIView):
 
             if user:
                 token=Token.objects.get_or_create(user=user)
-                print(token)
-                return Response({'token':token.key})
+                print(token[0])
+                return Response({'token':token[0].key})
 
             return Response({'message':'Invalid login credentials'})
 
