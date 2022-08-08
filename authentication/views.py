@@ -11,7 +11,7 @@ from .serializer import CreateSuperUserSerializer,LoginUserSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
-from serializer import UserDetailSerializer
+from .serializer import UserDetailSerializer
 
 from authentication import serializer
 
