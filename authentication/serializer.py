@@ -27,6 +27,14 @@ class CreateSuperUserSerializer(serializers.Serializer):
             )
         return attrs
 
+
+class UserDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=User
+        fields=['username','first_name','last_name']
+
+
 class LoginUserSerializer(serializers.Serializer):
     username=serializers.CharField()
     password=serializers.CharField()

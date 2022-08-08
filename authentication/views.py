@@ -1,5 +1,6 @@
 from http import server
 import imp
+from re import T
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from rest_framework.views import APIView
@@ -8,6 +9,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .serializer import CreateSuperUserSerializer,LoginUserSerializer
 from django.contrib.auth import authenticate
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from serializer import UserDetailSerializer
+
+from authentication import serializer
 
 
 User=get_user_model()
@@ -48,3 +54,12 @@ class LoginUserView(APIView):
             return Response({'message':'Invalid login credentials'})
 
 
+class GetUserDetails(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated,IsAdminUser]
+    def get(self,request):
+        user=request.user
+        serializer=UserDetailSerializer(user)
+        data=serializer.data
+        data['status']=200
+        return Response(data=data)
