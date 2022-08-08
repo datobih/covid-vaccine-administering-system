@@ -7,5 +7,5 @@ from .views import (
 urlpatterns = [
     path('create-super-user/',CreateSuperUserView.as_view(),name='create-super-user'),
     path('login/',LoginUserView.as_view(),name='login-user'),
-    path('user-details',GetUserDetails.as_view(),name='user-details')
+    path('user-details/',GetUserDetails.as_view(),name='user-details')
 ]
