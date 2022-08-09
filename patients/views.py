@@ -20,7 +20,7 @@ class AddPatientView(APIView):
         data=request.data
         print(data)
         serializer=AddPatientSerializer(data=data)
-        if(not serializer.is_valid):
+        if(not serializer.is_valid()):
             return Response(serializer.errors,status=400)
 
         return Response(data=serializer.validated_data,

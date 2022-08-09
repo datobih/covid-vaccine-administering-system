@@ -7,7 +7,7 @@ import json
 class AddPatientSerializer(serializers.Serializer):
     first_name=serializers.CharField(max_length=50)
     last_name=serializers.CharField(max_length=50)
-    gender=serializers.CharField(max_length=1)
+    gender=serializers.CharField(max_length=6)
     age=serializers.CharField(max_length=3)
     genotype=serializers.CharField()
     email=serializers.EmailField()
