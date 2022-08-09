@@ -19,7 +19,7 @@ class Patient(models.Model):
     phone_number=models.CharField(max_length=11,default='')
 
     def __str__(self) -> str:
-        return self.fullname
+        return f'{self.first_name} {self.last_name}'
 
 
 
