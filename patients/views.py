@@ -2,6 +2,7 @@ from typing import ClassVar
 from django.shortcuts import render
 from rest_framework.views import APIView
 import random
+from authentication import serializer
 from patients.models import Patient, VaccineCase
 from rest_framework.authtoken.models import Token
 from datetime import datetime
@@ -49,8 +50,11 @@ class AdministerVaccine(APIView):
         return Response({'times_more':
         serializer.validated_data['times_more']})
 
-
-
+class GetAllPatientsView(APIView):
+    def get(self,request):
+        patients=Patient.objects.all()
+        serializer=PatientSerializer(patients,many=True)
+        return Response(serializer.data)
 
 
 

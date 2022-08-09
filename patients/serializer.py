@@ -127,10 +127,16 @@ class VaccineCaseSerializer(serializers.ModelSerializer):
         'dosage_timeline']
 
 class PatientSerializer(serializers.ModelSerializer):
-    vaccine_cases=serializers.ListSerializer(child=VaccineCaseSerializer(),
-    allow_empty=True)
+
 
     class Meta:
         model=Patient
-        fields=['fullname','gender',
-        'age','health_status','vaccine_cases']
+        fields=['first_name','last_name','gender',
+        'age','genotype',
+        'email','blood_group','phone_number']
+
+
+class PatientDetailsSerializer(PatientSerializer):
+    vaccine_cases=serializers.ListSerializer(child=VaccineCaseSerializer,
+    allow_empty=True
+    )
