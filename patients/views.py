@@ -21,6 +21,7 @@ class AddPatientView(APIView):
         print(data)
         serializer=AddPatientSerializer(data=data)
         if(not serializer.is_valid()):
+            print('ADD PATIENT SERIALIZER NOT VALID')
             return Response(serializer.errors,status=400)
 
         return Response(data=serializer.validated_data,
