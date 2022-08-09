@@ -8,9 +8,10 @@ credentials={'first_name':'Bola',
 'age':'17',
 'genotype':'AA',
 'blood_group':'O',
-'phone_number':'08134343454'}
+'phone_number':'08134343454',
+'email':'dayodele89@gmail.com'}
 
 
 response=requests.post(endpoint,data=credentials)
 
-print(response)
+print(response.raise_for_status())
